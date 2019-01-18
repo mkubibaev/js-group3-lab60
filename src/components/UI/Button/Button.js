@@ -1,13 +1,15 @@
 import React from 'react';
+
 import './Button.css';
 
 const Button = props => {
+    const buttonClasses = ['btn'];
+    buttonClasses.push('btn-' + props.type);
+
     return (
-        <div className="col-1">
-            <button className="btn btn-primary">
-                Send
-            </button>
-        </div>
+        <button className={buttonClasses.join(' ')}>
+            {props.label}
+        </button>
     );
 };
 

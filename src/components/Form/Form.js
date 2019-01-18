@@ -1,6 +1,8 @@
 import React from 'react';
-import './Form.css';
 import Button from "../UI/Button/Button";
+import Input from "../UI/Input/Input";
+
+import './Form.css';
 
 const Form = () => {
     return (
@@ -9,18 +11,14 @@ const Form = () => {
                 <form>
                     <div className="form-row">
                         <div className="col-3">
-                            <input type="text"
-                                   className="form-control"
-                                   placeholder="author"
-                            />
+                            <Input placeholder="author" />
                         </div>
                         <div className="col-8">
-                            <input type="text"
-                                   className="form-control"
-                                   placeholder="message"
-                            />
+                            <Input placeholder="message" />
                         </div>
-                        <Button/>
+                        <div className="col-1">
+                            <Button label="Send" type="primary" />
+                        </div>
                     </div>
                 </form>
             </div>
