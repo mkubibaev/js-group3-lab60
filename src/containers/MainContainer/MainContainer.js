@@ -11,7 +11,6 @@ class MainContainer extends Component {
     };
 
     componentDidMount() {
-
         fetch('http://146.185.154.90:8000/messages').then(response => {
             if (response.ok) {
                 return response.json();
@@ -19,10 +18,7 @@ class MainContainer extends Component {
 
             throw new Error ('Error');
         }).then(messages => {
-            console.log(messages);
-
             this.setState({messages});
-
         }).catch(error => {
             console.log(error);
         });
@@ -37,24 +33,26 @@ class MainContainer extends Component {
     };
 
     sendClick = () => {
-        if (this.state.author !== '' && this.state.message !== '') {
-            const wrap = [...this.state.messages];
+        // if (this.state.author !== '' && this.state.message !== '') {
+        //     const wrap = [...this.state.messages];
+        //
+        //     const newWrap = {
+        //         author: this.state.author,
+        //         message: this.state.message
+        //     };
+        //
+        //     wrap.push(newWrap);
+        //
+        //     this.setState({
+        //         messages: wrap,
+        //         author: '',
+        //         message: ''
+        //     });
+        // } else {
+        //     alert('Please fill all fields!');
+        // }
 
-            const newWrap = {
-                author: this.state.author,
-                message: this.state.message
-            };
-
-            wrap.push(newWrap);
-
-            this.setState({
-                messages: wrap,
-                author: '',
-                message: ''
-            });
-        } else {
-            alert('Please fill all fields!');
-        }
+        alert('123');
     };
 
     render() {

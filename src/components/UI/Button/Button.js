@@ -7,7 +7,7 @@ const Button = props => {
     buttonClasses.push('btn-' + props.type);
 
     return (
-        <button className={buttonClasses.join(' ')} onClick={props.sendClick}>
+        <button className={buttonClasses.join(' ')} onClick={props.onSendClick}>
             {props.label}
         </button>
     );
