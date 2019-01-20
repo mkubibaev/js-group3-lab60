@@ -11,13 +11,13 @@ const Form = props => {
                 <div className="form-row">
                     <div className="col-3">
                         <Input placeholder="author"
-                               value={props.author}
+                               onValue={props.author}
                                onInput={props.changeAuthor}
                         />
                     </div>
                     <div className="col-8">
                         <Input placeholder="message"
-                               value={props.message}
+                               onValue={props.message}
                                onInput={props.changeMessage}
                         />
                     </div>

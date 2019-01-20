@@ -6,6 +6,7 @@ const Input = props => {
     return (
         <input type="text"
                className="form-control"
+               value={props.onValue}
                placeholder={props.placeholder}
                onChange={props.onInput}
         />
