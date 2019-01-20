@@ -7,6 +7,7 @@ const Input = props => {
         <input type="text"
                className="form-control"
                placeholder={props.placeholder}
+               onChange={props.onInput}
         />
     );
 };
