@@ -33,26 +33,28 @@ class MainContainer extends Component {
     };
 
     sendClick = () => {
-        // if (this.state.author !== '' && this.state.message !== '') {
-        //     const wrap = [...this.state.messages];
-        //
-        //     const newWrap = {
-        //         author: this.state.author,
-        //         message: this.state.message
-        //     };
-        //
-        //     wrap.push(newWrap);
-        //
-        //     this.setState({
-        //         messages: wrap,
-        //         author: '',
-        //         message: ''
-        //     });
-        // } else {
-        //     alert('Please fill all fields!');
-        // }
+        if (this.state.author !== '' && this.state.message !== '') {
 
-        alert('123');
+            const newMessage = {
+                author: this.state.author,
+                message: this.state.message
+            };
+
+            fetch('http://146.185.154.90:8000/messages', {
+                method: 'post',
+                body: newMessage
+            }).then(() => {
+                this.setState({
+                    author: '',
+                    message: ''
+                });
+            }).catch(error => {
+                console.log(error);
+            });
+
+        } else {
+            alert('Please fill all fields!');
+        }
     };
 
     render() {
