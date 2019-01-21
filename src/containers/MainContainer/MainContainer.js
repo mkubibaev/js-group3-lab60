@@ -52,6 +52,8 @@ class MainContainer extends Component {
         const lastDate = this.state.messages[this.state.messages.length - 1].datetime;
         clearInterval(this.intervalId);
         this.getNewMessages(lastDate);
+
+        window.scroll(0, window.document.body.offsetHeight);
     }
 
     componentWillUnmount() {
@@ -90,7 +92,6 @@ class MainContainer extends Component {
     };
 
     render() {
-        console.log('render');
         return (
             <Fragment>
                 <Header/>
