@@ -22,7 +22,7 @@ const Form = props => {
                         />
                     </div>
                     <div className="col-1">
-                        <Button onSendClick={props.sendClick} label="Send" type="primary" />
+                        <Button onSendClick={props.sendMessage} label="Send" type="primary" />
                     </div>
                 </div>
             </div>

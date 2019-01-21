@@ -3,6 +3,9 @@ import Header from "../../components/Header/Header";
 import Form from "../../components/Form/Form";
 import Messages from "../../components/Messages/Messages";
 
+const messagesUrl = 'http://146.185.154.90:8000/messages';
+const getMessagesByDate = 'http://146.185.154.90:8000/messages?datetime=';
+
 class MainContainer extends Component {
     state = {
         author: '',
@@ -10,18 +13,47 @@ class MainContainer extends Component {
         messages: []
     };
 
-    componentDidMount() {
-        fetch('http://146.185.154.90:8000/messages').then(response => {
-            if (response.ok) {
-                return response.json();
-            }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return nextState.messages.length !== this.state.messages.length;
+    // }
 
-            throw new Error ('Error');
-        }).then(messages => {
-            this.setState({messages});
-        }).catch(error => {
-            console.log(error);
-        });
+
+    getAllMessages = (lastDate) => {
+        let url = lastDate ? getMessagesByDate + lastDate : messagesUrl;
+
+        return fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+
+                throw new Error ('Error');
+            }).then(newMessages => {
+                this.setState({messages: [...this.state.messages].concat(newMessages)});
+            }).catch(error => {
+                console.log(error);
+            });
+    };
+
+
+    getNewMessages = (lastDate) => {
+        this.intervalId = setInterval(() => {
+            this.getAllMessages(lastDate)
+        }, 2000);
+    };
+
+    componentDidMount() {
+        this.getAllMessages();
+    }
+
+    componentDidUpdate() {
+        const lastDate = this.state.messages[this.state.messages.length - 1].datetime;
+        clearInterval(this.intervalId);
+        this.getNewMessages(lastDate);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
     }
 
     changeAuthor = event => {
@@ -32,23 +64,23 @@ class MainContainer extends Component {
         this.setState({message: event.target.value});
     };
 
-    sendClick = () => {
-		if (this.state.author !== '' && this.state.message !== '') {
+    sendClickHandler = () => {
+        if (this.state.author !== '' && this.state.message !== '') {
+            clearInterval(this.intervalId);
 
-			const data = new URLSearchParams();
+            const data = new URLSearchParams();
 
-			data.set('author', this.state.author);
-			data.set('message', this.state.message);
+            data.set('author', this.state.author);
+            data.set('message', this.state.message);
 
-			fetch('http://146.185.154.90:8000/messages', {
-				method: 'post',
-				body: data,
-			}).then(this.setState({
-                    author: '',
-                    message: ''
-                })
-            ).catch(error => {
-                console.log(error);
+            return fetch(messagesUrl, {
+                method: 'post',
+                body: data,
+            }).then(this.setState({
+                author: '',
+                message: ''
+            })).catch(error => {
+                    console.log(error);
             });
 
         } else {
@@ -56,17 +88,8 @@ class MainContainer extends Component {
         }
     };
 
-    watching = () => {
-        setInterval(() => {
-
-        }, 2000);
-    };
-
-    componentWillUnmount() {
-
-    }
-
     render() {
+        console.log('render');
         return (
             <Fragment>
                 <Header/>
@@ -78,7 +101,7 @@ class MainContainer extends Component {
                     message={this.state.message}
                     changeAuthor={(event) => this.changeAuthor(event)}
                     changeMessage={(event) => this.changeMessage(event)}
-                    sendClick={this.sendClick}
+                    sendMessage={this.sendClickHandler}
                 >
                 </Form>
             </Fragment>
