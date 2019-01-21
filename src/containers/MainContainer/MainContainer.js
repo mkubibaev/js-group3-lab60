@@ -13,9 +13,11 @@ class MainContainer extends Component {
         messages: []
     };
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return nextState.messages.length !== this.state.messages.length;
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.messages.length !== this.state.messages.length ||
+            nextState.author !== this.state.author ||
+            nextState.message !== this.state.message;
+    }
 
 
     getAllMessages = (lastDate) => {
