@@ -68,7 +68,6 @@ class MainContainer extends Component {
 
     sendClickHandler = () => {
         if (this.state.author !== '' && this.state.message !== '') {
-            clearInterval(this.intervalId);
 
             const data = new URLSearchParams();
 
