@@ -19,7 +19,6 @@ class MainContainer extends Component {
             nextState.message !== this.state.message;
     }
 
-
     getAllMessages = (lastDate) => {
         let url = lastDate ? getMessagesByDate + lastDate : messagesUrl;
 
@@ -37,7 +36,6 @@ class MainContainer extends Component {
             });
     };
 
-
     getNewMessages = (lastDate) => {
         this.intervalId = setInterval(() => {
             this.getAllMessages(lastDate)
@@ -48,12 +46,14 @@ class MainContainer extends Component {
         this.getAllMessages();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         const lastDate = this.state.messages[this.state.messages.length - 1].datetime;
         clearInterval(this.intervalId);
         this.getNewMessages(lastDate);
 
-        window.scroll(0, window.document.body.offsetHeight);
+        if (prevState.messages.length !== this.state.messages.length) {
+            window.scroll(0, window.document.body.offsetHeight);
+        }
     }
 
     componentWillUnmount() {
